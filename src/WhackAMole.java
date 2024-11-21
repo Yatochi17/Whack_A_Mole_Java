@@ -13,6 +13,7 @@ public class WhackAMole {
     JFrame frame = new JFrame("Whack A Mole");
     JLabel txtLabel = new JLabel();
     JPanel txtPanel = new JPanel();
+    JPanel boardPanel = new JPanel();
 
     WhackAMole() {
         frame.setVisible(true);
@@ -29,6 +30,11 @@ public class WhackAMole {
 
         txtPanel.setLayout(new BorderLayout());
         txtPanel.add(txtLabel);
-        frame.add(txtPanel);
+        frame.add(txtPanel, BorderLayout.NORTH);
+
+        boardPanel.setLayout(new GridLayout(3,3) );
+        boardPanel.setBackground(Color.ORANGE);
+        frame.add(boardPanel);
+
     }
 }
