@@ -1,10 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Time;
 import java.util.Random;
-import java.util.random.*;
-
 
 
 public class WhackAMole {
@@ -22,11 +19,12 @@ public class WhackAMole {
     ImageIcon scorpio;
 
     JButton currentMoleTile;
-    JButton currentScorpioTie;
+    JButton currentScorpioTile;
 
     Random random = new Random();
     Timer setMoleTimer;
     Timer setScorpioTimer;
+    int score = 0;
 
     WhackAMole() {
         //frame.setVisible(true);
@@ -60,9 +58,68 @@ public class WhackAMole {
             board[i] = tile;
             boardPanel.add(tile);
             tile.setFocusable(false);
-            //tile.setIcon(mole);
+
+            tile.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                JButton tile = (JButton) e.getSource();
+                if (tile == currentMoleTile){
+                    score += 10;
+                    txtLabel.setText("Score: " + Integer.toString(score));
+                }
+                else if (tile == currentScorpioTile){
+                    txtLabel.setText("Final Score: " + Integer.toString(score));
+                    setMoleTimer.stop();
+                    setScorpioTimer.stop();
+
+                for (int i = 0; i < 9; i++){
+                    board[i].setEnabled(false);
+                }
+                }
+                }
+            });
         }
 
+        setMoleTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //remove mole from current tile
+                if (currentMoleTile != null){
+                    currentMoleTile.setIcon(null);
+                    currentMoleTile = null;
+                }
+                //random select another tile
+                int num = random.nextInt(9); //0-8
+                JButton tile = board[num];
+                //if tile occupied, skip tile
+                if (currentMoleTile == tile) return;
+                //set tile to mole
+                currentMoleTile = tile;
+                currentMoleTile.setIcon(mole);
+            }
+        });
+
+        setScorpioTimer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //remove scorpio from current tile
+                if (currentScorpioTile != null){
+                    currentScorpioTile.setIcon(null);
+                    currentScorpioTile = null;
+                }
+                //random select another tile
+                int num = random.nextInt(9); //0-8
+                JButton tile = board[num];
+                //if tile occupied, skip tile
+                if (currentMoleTile == tile) return;
+                //set tile to scorpio
+                currentScorpioTile = tile;
+                currentScorpioTile.setIcon(scorpio);
+            }
+        });
+
+        setMoleTimer.start();
+        setScorpioTimer.start();
         frame.setVisible(true);
     }
 }
