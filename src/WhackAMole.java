@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Time;
+import java.util.Random;
 import java.util.random.*;
 
 
@@ -15,8 +17,19 @@ public class WhackAMole {
     JPanel txtPanel = new JPanel();
     JPanel boardPanel = new JPanel();
 
+    JButton[] board = new JButton[9];
+    ImageIcon mole;
+    ImageIcon scorpio;
+
+    JButton currentMoleTile;
+    JButton currentScorpioTie;
+
+    Random random = new Random();
+    Timer setMoleTimer;
+    Timer setScorpioTimer;
+
     WhackAMole() {
-        frame.setVisible(true);
+        //frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -36,5 +49,20 @@ public class WhackAMole {
         boardPanel.setBackground(Color.ORANGE);
         frame.add(boardPanel);
 
+        Image scorpioImg = new ImageIcon(getClass().getResource("Image/Scorpion.jpg")).getImage();
+        scorpio = new ImageIcon(scorpioImg.getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+
+        Image moleImg = new ImageIcon(getClass().getResource("Image/mole.jpeg")).getImage();
+        mole = new ImageIcon(moleImg.getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+
+        for (int i = 0; i < 9; i++){
+            JButton tile = new JButton();
+            board[i] = tile;
+            boardPanel.add(tile);
+            tile.setFocusable(false);
+            //tile.setIcon(mole);
+        }
+
+        frame.setVisible(true);
     }
 }
