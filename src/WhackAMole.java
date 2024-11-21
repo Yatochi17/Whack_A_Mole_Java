@@ -7,17 +7,28 @@ import java.util.random.*;
 
 public class WhackAMole {
 
-    int boardWith = 600;
+    int boardWidth = 600;
     int boardHeight = 650;
 
     JFrame frame = new JFrame("Whack A Mole");
+    JLabel txtLabel = new JLabel();
+    JPanel txtPanel = new JPanel();
 
     WhackAMole() {
         frame.setVisible(true);
-        frame.setSize(boardWith, boardHeight);
+        frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+
+        txtLabel.setFont(new Font("Monospaced", Font.BOLD, 50));
+        txtLabel.setHorizontalAlignment(JLabel.CENTER);
+        txtLabel.setText("Score: 0");
+        txtLabel.setOpaque(true);
+
+        txtPanel.setLayout(new BorderLayout());
+        txtPanel.add(txtLabel);
+        frame.add(txtPanel);
     }
 }
